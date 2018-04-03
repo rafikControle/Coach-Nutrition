@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:background="@drawable/img_nutrition"
+android:layout_height="match_parent">
+
+<com.github.mikephil.charting.charts.BarChart
+    android:id="@+id/barchart"
+    android:layout_width="match_parent"
+    android:layout_height="300dip"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/textView9"
+    android:layout_marginTop="28dp" />
+
+<TextView
+    android:id="@+id/textView9"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginStart="28dp"
+    android:layout_marginTop="19dp"
+    android:text="Votre régime dans les derniers jours :" />
+
+<TextView
+    android:id="@+id/textView3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/textView9"
+    android:layout_below="@+id/barchart"
+    android:layout_marginTop="24dp"
+    android:text="Vos repas le jour : " />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:background="@drawable/purple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/spinner2"
+        android:layout_marginTop="11dp"
+
+        android:text="Voir" />
+</RelativeLayout>

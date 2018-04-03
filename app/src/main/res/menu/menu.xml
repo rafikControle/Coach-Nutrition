@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item android:id="@+id/radd"
+
+    android:icon="@drawable/resto"
+
+    android:title="Ajout_repa"
+
+    app:showAsAction="always"></item>
+
+    <item android:id="@+id/cons2"
+
+
+
+        android:title="Consultation"
+
+        app:showAsAction="never"></item>
+    <item android:id="@+id/mobj"
+
+
+
+        android:title="Objectif"
+
+        app:showAsAction="never"></item>
+    <item android:id="@+id/aladd"
+
+
+
+        android:title="Ajout Aliments"
+
+        app:showAsAction="never"></item>
+    <item android:id="@+id/mvsc"
+
+
+
+        android:title="Maj excel"
+
+        app:showAsAction="never"></item>
+    <item android:id="@+id/mbdd"
+
+
+
+        android:title="Maj externe"
+
+        app:showAsAction="never"></item>
+
+
+
+
+
+</menu>

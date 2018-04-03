@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group>
+        <item
+            android:id="@+id/nmain"
+            android:icon="@drawable/ic_home"
+            android:title="Main" />
+
+        <item
+            android:id="@+id/nobj"
+            android:icon="@drawable/ic_target"
+            android:title="Objectif" />
+        <item
+            android:id="@+id/naja"
+            android:icon="@drawable/ic_add_circle"
+            android:title="Ajout Aliment" />
+        <item
+            android:id="@+id/najr"
+            android:icon="@drawable/ic_addrepas"
+            android:title="Ajout Repas" />
+
+        <item
+            android:id="@+id/ncon2"
+            android:icon="@drawable/ic_graph"
+            android:title="Consultation" />
+        <item
+            android:id="@+id/quitter"
+            android:icon="@drawable/ic_exit"
+            android:title="Quitter"
+            />
+    </group>
+
+
+
+</menu>

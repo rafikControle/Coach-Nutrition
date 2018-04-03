@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/img_nutrition">
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/butoon2"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/butoon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="71dp"
+        android:background="@drawable/rectan3"
+        android:padding="10dp"
+        android:text="Ajout autre" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/butoon2"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="13dp"
+        android:text="Total: "
+        android:textSize="17dp"/>
+
+    <Button
+        android:id="@+id/vrep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/rectan2"
+        android:padding="10dp"
+        android:text="Valider mon repas" />
+
+
+</RelativeLayout>

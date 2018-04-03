@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">ProjetFinal</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--String array-->
+    <string-array name="list_conseil">
+        <item>Cibler vos objectifs avec justesse</item>
+        <item>Choisissez le bon moment</item>
+        <item>Identifiez vos erreurs</item>
+        <item>Trouvez la méthode adaptée</item>
+        <item>Restez dans le droit chemin</item>
+        <item>Bétonnez la stabilisation</item>
+        <item>Manger 5 fruits et légumes par jour</item>
+        <item>Changez durablement vos habitudes</item>
+        <item>Vérifiez et rectifiez à la moindre alerte</item>
+        <item>Bougez !</item>
+        <item>Se fixer un objectif raisonnable</item>
+        <item>Faire un choix dans ses aliments</item>
+        <item>Buvez régulièrement</item>
+        <item>Apprenez à gérer les moments à risque</item>
+        <item>Avoir toujours dans son frigidaire</item>
+        <item>Redécouvrir des aliments que vous aviez oublié</item>
+        <item>Augmenter les portions de fruits et légumes</item>
+        <item>À table, ouvrez léventail de ses goûts</item>
+        <item>Mangez lentement, en sa-vou-rant</item>
+        <item>Mangez 4 fois par jour</item>
+        <item>Reprenez le chemin du marché</item>
+        <item>Prendre un véritable petit déjeuner</item>
+        <item>Équipez-vous dustensiles de cuisine adaptés</item>
+        <item>Boire suffisament</item>
+        <item>Prendre soin de vous</item>
+        <item>Ne pas oublier lactivité sportive</item>
+        <item>Ne pas sauter de repas</item>
+        <item>Faire ses courses en ayant mangé avant</item>
+        <item>Eviter le grignotage entre les repas</item>
+        <item>Apprendre à ne pas se resservir</item>
+        <item>Prendre une collation</item>
+    </string-array>
+</resources>
