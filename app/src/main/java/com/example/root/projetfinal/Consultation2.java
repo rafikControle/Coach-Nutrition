@@ -5,7 +5,6 @@ package com.example.root.projetfinal;
  */
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -76,13 +75,10 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
     LineGraphSeries<DataPoint>seriesMin;
     LineGraphSeries<DataPoint>seriesMax;
     GraphView graph;
-    double x,y;
     int rass ;
     int compteur =0;
 
     Button button;
-
-    //variable 2222222222222222222222222222222222222
 
 
     @Override
@@ -105,7 +101,7 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
                 Log.i("maxcalconsult",maxc);
                 Log.i("mincalconsult",minc);
             }
-            //++++++++++++++++++++++++++++++++++++
+
             LimitLine upper_limit = new LimitLine(Float.valueOf(maxc), "MAX Obj");
             upper_limit.setLineWidth(4f);
             upper_limit.enableDashedLine(10f, 10f, 0f);
@@ -119,44 +115,30 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
             lower_limit.setTextSize(10f);
 
             YAxis leftAxis = barChart.getAxisLeft();
-// reset all limit lines to avoid overlapping lines
+            // reset all limit lines to avoid overlapping lines
             leftAxis.removeAllLimitLines();
             leftAxis.addLimitLine(upper_limit);
             leftAxis.addLimitLine(lower_limit);
             leftAxis.setAxisMaxValue(10000f);
             leftAxis.setAxisMinValue(0f);
-//leftAxis.setYOffset(20f);
             leftAxis.enableGridDashedLine(10f, 10f, 0f);
             leftAxis.setDrawZeroLine(false);
 
-// limit lines are drawn behind data (and not on top)
+            // limit lines are drawn behind data (and not on top)
             leftAxis.setDrawLimitLinesBehindData(false);
             barChart.getAxisRight().setEnabled(false);
 
-            //+++++++++++++++++++++++++++
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Log.i("aaaaaaaaaaa", "debut de load");
-            //++++++++++++++++++++
-            Log.d("aaaaaaaaa ", "rrrrrrrrrrrrr" );
+
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("content").authority(authority).appendPath(TABLE_REGIME);
             String[] columns = new String[]{ID, JOUR, CALORIES, REPA_MANGER,LIPIDES,GLUCIDES,PROTEINES};
             Uri uri = builder.build();
-            Log.d("aaaaaaaaa ", "77777777" );
             Cursor ch = getContentResolver().query(uri, columns,null,null,null);
-            Log.d("aaaaaaaaa ", "8888888" );
             try {
-                Log.d("aaaaaaaaa ", "9999999" );
                 ch.moveToLast();
                 int i=0;
                 while (!ch.isBeforeFirst() && i<7) {//ptr ||
-
-                    Log.d("bbbbbbb",ch.getString(0));//id
-                    Log.d("cursor1date",ch.getString(1));//jour
-                    Log.d("cursor2calories",ch.getString(2));//cal
-                    Log.d("cursor3repa",ch.getString(3));//repa
-                    // Log.d("cursor4",ch.getString(4));//glu
-                    // Log.d("cursor4",ch.getString(5));//pro
 
                     listeJourX.add(ch.getString(1));
                     listeCaloriesY.add(ch.getString(2));
@@ -179,7 +161,6 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
 
             if (compteur!=0) {
                 // il ya des donnée dans les liste
-                //******************************************************************
                 int comptour = 0;
                 ArrayList<BarEntry> entries = new ArrayList<>();
                 ArrayList<String> labels = new ArrayList<String>();
@@ -199,7 +180,6 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
                 bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
                 barChart.animateY(500);
 
-                //***********************************************************************
                 final ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listeJourX);
 
                 spinner2.setAdapter(adapter);
@@ -208,10 +188,7 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view,
                                                int position, long id) {
-                        // xxx =spinner2.getSelectedItem().toString();
                         rass = position;
-
-
                     }
 
                     @Override
@@ -225,7 +202,6 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
                         Toast.LENGTH_LONG).show();
             }
 
-            //**+/+/+/+/+/+/++/+/+/++/+/+/+/++/+/+/+/+/+/++/+/++/+/+/++/+/+/+++/+/+/+/++/+/+/++/+/+/+
         } else {
             //code for landscape mode
             spinner2 = (Spinner)findViewById(R.id.spinner2);
@@ -241,28 +217,15 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
                 Log.i("mincalconsult",minc);
             }
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Log.i("aaaaaaaaaaa", "debut de load");
-            //++++++++++++++++++++
-            Log.d("aaaaaaaaa ", "rrrrrrrrrrrrr" );
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("content").authority(authority).appendPath(TABLE_REGIME);
             String[] columns = new String[]{ID, JOUR, CALORIES, REPA_MANGER,LIPIDES,GLUCIDES,PROTEINES};
             Uri uri = builder.build();
-            Log.d("aaaaaaaaa ", "77777777" );
             Cursor ch = getContentResolver().query(uri, columns,null,null,null);
-            Log.d("aaaaaaaaa ", "8888888" );
             try {
-                Log.d("aaaaaaaaa ", "9999999" );
                 ch.moveToLast();
                 int i=0;
                 while (!ch.isBeforeFirst() && i<7) {
-
-                    Log.d("bbbbbbb",ch.getString(0));//id
-                    Log.d("cursor1date",ch.getString(1));//jour
-                    Log.d("cursor2calories",ch.getString(2));//cal
-                    Log.d("cursor3repa",ch.getString(3));//repa
-                    // Log.d("cursor4",ch.getString(4));//glu
-                    // Log.d("cursor4",ch.getString(5));//pro
 
                     listeJourX.add(ch.getString(1));
                     listeCaloriesY.add(ch.getString(2));
@@ -283,25 +246,6 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
 
             }
 
-            //+++++++++++++++++++++++
-            //le probleme ici si le user oubli un jour alors il y'aura un decalage
-       /* Calendar calendar = Calendar.getInstance();
-        Date d7 = calendar.getTime();
-        calendar.add(Calendar.DATE, -1);
-        Date d6 = calendar.getTime();
-        calendar.add(Calendar.DATE, -1);
-        Date d5 = calendar.getTime();
-        calendar.add(Calendar.DATE, -1);
-        Date d4 = calendar.getTime();
-        calendar.add(Calendar.DATE, -1);
-        Date d3 = calendar.getTime();
-        calendar.add(Calendar.DATE, -1);
-        Date d2 = calendar.getTime();
-        calendar.add(Calendar.DATE, -1);
-        Date d1 = calendar.getTime();*/
-
-
-
             seriesMin = new LineGraphSeries<>(generateDataMin());
             seriesMax = new LineGraphSeries<>(generateDataMax());
 
@@ -318,21 +262,16 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
                 graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
                 graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
 
-// set manual x bounds to have nice steps
+                // set manual x bounds to have nice steps
                 //      graph.getViewport().setMinX(d1.getTime());
                 //    graph.getViewport().setMaxX(d3.getTime());
                 graph.getViewport().setXAxisBoundsManual(true);
 
-// as we use dates as labels, the human rounding to nice readable numbers
-// is not necessary
+                // as we use dates as labels, the human rounding to nice readable numbers
+                // is not necessary
                 graph.getGridLabelRenderer().setHumanRounding(false);
 
                 final ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listeJourX);
-
-      /*  adapter = new SimpleCursorAdapter(Quiz.this,
-                android.R.layout.simple_spinner_item, null,
-                new String[]{"payyyyys"},
-                new int[]{android.R.id.text1}, 0);*/
 
                 spinner2.setAdapter(adapter);
 
@@ -340,7 +279,6 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view,
                                                int position, long id) {
-                        // xxx =spinner2.getSelectedItem().toString();
                         rass = position;
                     }
 
@@ -364,9 +302,7 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
     {
         MediaPlayer mp = MediaPlayer.create(Consultation2.this,R.raw.alert);
         mp.start();
-       // super.onBackPressed();
-        Log.i("baaaaaaaaaaaaack","presssss");
-        final Intent i = new Intent(this,MainActivity0.class);
+        final Intent i = new Intent(this,MainActivity.class);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Consultation2.this);
         builder.setMessage("Quittez l'activité  ?");
@@ -409,25 +345,14 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
     private DataPoint[] generateData() {
         // DataPoint[] values = new DataPoint[compteur];
         DataPoint[] values = new DataPoint[listeJourX.size()];
-        Log.i("comptouuuuur", String.valueOf(compteur));
-        Log.i("i", String.valueOf(listeCaloriesY.size()));
-        Log.i("k", String.valueOf(listeJourX.size()));
-        Log.i("jjjjj0", String.valueOf(listeCaloriesY.get(0)));
-        Log.i("jjjjj1", String.valueOf(listeJourX.get(0)));
+
         int j =0;
         Calendar calendar = Calendar.getInstance();
         Date d1 = calendar.getTime();
         for (int i =listeJourX.size()-1;i>=0;i--){
 
-
             values[j] =new DataPoint(convertedDate.get(i), Double.parseDouble(listeCaloriesY.get(i)));//jour courant
-            //values[j] =new DataPoint(j, i);//jour courant
-                  /*  new DataPoint(convertedDate.get(5), Double.parseDouble(listeCaloriesY.get(5))),//hier
-                    new DataPoint(convertedDate.get(4), Double.parseDouble(listeCaloriesY.get(4))),//j -3
-                    new DataPoint(convertedDate.get(3), Double.parseDouble(listeCaloriesY.get(3))),//j -4
-                    new DataPoint(convertedDate.get(2), Double.parseDouble(listeCaloriesY.get(2))),//j -5
-                    new DataPoint(convertedDate.get(1), Double.parseDouble(listeCaloriesY.get(1))),//j -6
-                    new DataPoint(convertedDate.get(0), Double.parseDouble(listeCaloriesY.get(0)))//j -7*/
+
             j++;
         }
         return values;
@@ -441,15 +366,8 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
 
         for (int i =listeJourX.size()-1;i>=0;i--){
 
-
             values[j] =new DataPoint(convertedDate.get(i), Double.parseDouble(minc));//jour courant
-            //values[j] =new DataPoint(j, i);//jour courant
-                  /*  new DataPoint(convertedDate.get(5), Double.parseDouble(listeCaloriesY.get(5))),//hier
-                    new DataPoint(convertedDate.get(4), Double.parseDouble(listeCaloriesY.get(4))),//j -3
-                    new DataPoint(convertedDate.get(3), Double.parseDouble(listeCaloriesY.get(3))),//j -4
-                    new DataPoint(convertedDate.get(2), Double.parseDouble(listeCaloriesY.get(2))),//j -5
-                    new DataPoint(convertedDate.get(1), Double.parseDouble(listeCaloriesY.get(1))),//j -6
-                    new DataPoint(convertedDate.get(0), Double.parseDouble(listeCaloriesY.get(0)))//j -7*/
+
             j++;
         }
         return values;
@@ -463,15 +381,8 @@ public class Consultation2 extends AppCompatActivity implements View.OnClickList
 
         for (int i =listeJourX.size()-1;i>=0;i--){
 
-
             values[j] =new DataPoint(convertedDate.get(i), Double.parseDouble(maxc));//jour courant
-            //values[j] =new DataPoint(j, i);//jour courant
-                  /*  new DataPoint(convertedDate.get(5), Double.parseDouble(listeCaloriesY.get(5))),//hier
-                    new DataPoint(convertedDate.get(4), Double.parseDouble(listeCaloriesY.get(4))),//j -3
-                    new DataPoint(convertedDate.get(3), Double.parseDouble(listeCaloriesY.get(3))),//j -4
-                    new DataPoint(convertedDate.get(2), Double.parseDouble(listeCaloriesY.get(2))),//j -5
-                    new DataPoint(convertedDate.get(1), Double.parseDouble(listeCaloriesY.get(1))),//j -6
-                    new DataPoint(convertedDate.get(0), Double.parseDouble(listeCaloriesY.get(0)))//j -7*/
+
             j++;
         }
         return values;

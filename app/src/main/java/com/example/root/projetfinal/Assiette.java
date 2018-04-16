@@ -16,9 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -31,17 +29,13 @@ public class Assiette extends ListActivity implements View.OnClickListener{
 
     ArrayList<Unité> listeR= new ArrayList<Unité>();
     Button vrep;
-    Cursor cur;
     String itemAliment;
     String itemQuantite;
 
     double totalCalToday=0;
-    int q;
-    double qc,qg,qp,ql;
     String calToday;
     String repToday="";
     String a;
-    Unité u;
     private String authority = "fr.rafik.projet";
     public final static String TABLE_ALIMENT = "aliment";
     public static final String ID = "id";
@@ -78,38 +72,12 @@ public class Assiette extends ListActivity implements View.OnClickListener{
         butoon2= (Button)findViewById(R.id.butoon2);
         vrep.setOnClickListener(this);
         butoon2.setOnClickListener(this);
-        i = new Intent(this,MainActivity0.class);
-        Log.i("tttttt","000000000000");
+        i = new Intent(this,MainActivity.class);
 
-
-
-        //Bundle extra = getIntent().getBundleExtra("extra");
-        Log.i("tttttt","111111111111");
-      //  listeR = (ArrayList<Unité>) getIntent().getSerializableExtra("extra");
-       // listeR = (ArrayList<Unité>) extra.getSerializable("objects");
-    //    Log.i("tttttt","22222222222");
-       // listeR=(ArrayList<Unité>)getIntent().getSerializableExtra("listeRepas");
-       // listeR=(ArrayList<Unité>)getIntent().getParcelableExtra("listeRepas");
-
-        Log.i("liste rrrr", String.valueOf(listeR.get(0).getNom_aliment()));
         getNomAl(listeR);
         getCalAl(listeR);
-       // Log.i("liste rrrr", String.valueOf(listeR.get(0)));
-        /*
-        ListAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, cur,
-                // Array of cursor columns to bind to:
-                new String[]{Base.PAYS, Base.CAPITALE},
-                // Parallel array of which template objects to bind to those columns.
-                new int[]{android.R.id.text1, android.R.id.text2});
-        // Bind to our new adapter.
 
-        setListAdapter(adapter);*/
         adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listeNom);
-
-      /*  adapter = new SimpleCursorAdapter(Quiz.this,
-                android.R.layout.simple_spinner_item, null,
-                new String[]{"payyyyys"},
-                new int[]{android.R.id.text1}, 0);*/
 
         setListAdapter(adapter);
         updateTotal();
@@ -123,25 +91,16 @@ public class Assiette extends ListActivity implements View.OnClickListener{
     protected void onListItemClick(ListView l, View v, final int position, final long id) {
         //ouvrire une fenetre alert dialog avec bouton ok et button supprimer
         String x = getListView().getItemAtPosition(position).toString();
-        Log.i("xxxxxxxxxx",x);
         String[] parts = x.split(" ");
         itemAliment = parts[0];
-        Log.i("yyyyyyyyy",itemAliment);
         itemQuantite = parts[1];
-        Log.i("ttttttttt",itemQuantite);
-        //itemQuantite += parts[3];
-      //  Unité item= (Unité) getListView().getSelectedItem();
-       // String itemAliment=item.getNom_aliment();
-      //  int itemQuantite=item.getQuantité();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(Assiette.this);
        builder.setMessage("vous avez : " + "\n" +itemAliment+"\n" +"quantité : "+ itemQuantite+" C");
         builder.setPositiveButton("Supp", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //clique supprimé unité de lassiette
-
-                Log.d("aaaaaaaaa ", String.valueOf(position));
-                Log.d("aaaaaaaaa ", String.valueOf(id));
                 //choisir
                 //suppressionItemFromListe(itemAliment,position,1);
                 //ou
@@ -184,31 +143,14 @@ public class Assiette extends ListActivity implements View.OnClickListener{
 
     void validationAssiette(){
         double compteurCal=0;
-       /* for(int i=0;i<listeR.size();i++) {// a modifier
-            u = listeR.get(i);
-            a = u.getNom_aliment();
-            q = u.getQuantité();
-            qc = u.getCalQuantité();
-            //  qg=u.getGluQuantité();
-            //  ql=u.getLipQuantité();
-            //  qp=u.getProQuantité();
-            compteurCal += qc;
-            Log.i("calories today ::::", String.valueOf(compteurCal));
-        }*/
+
         compteurCal = getTotalCalToday(listecal);
         Log.i("calories today ::::", String.valueOf(compteurCal));
             ContentValues values = new ContentValues();
             Calendar calendar = Calendar.getInstance();
             values.put(JOUR,String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH))+"/"+String.valueOf(Calendar.getInstance().get(Calendar.MONTH))+"/"+String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));//get date
-           // values.put(JOUR, String.valueOf(calendar.getTime()));//get date
 
-          //  values.put(LIPIDES,ql);
-          //  values.put(GLUCIDES,qg);
-          //  values.put(PROTEINES,qp);
-            //verifi si le jour éxiste deja ou pas
-            Log.i("ghoulaaaaaaa","1111111111111");
             if (!jourExiste ()){//nouveau jour nouvelle ligne
-                Log.i("ghoulaaaaaaa","22222222222222");
             values.put(CALORIES,compteurCal);//quantité de calories consommer
             values.put(REPA_MANGER,repToday);//tous les repas consommer
             Uri.Builder builder = new Uri.Builder();
@@ -226,15 +168,11 @@ public class Assiette extends ListActivity implements View.OnClickListener{
                 Uri.Builder builder = new Uri.Builder();
                 builder.scheme("content").authority(authority).appendPath(TABLE_REGIME);
                 Uri uri = builder.build();
-               // String[] columns = new String[]{ID, JOUR, CALORIES, LIPIDES,GLUCIDES,PROTEINES};
-               // Cursor c = bd.query(GEO, columns, "pays!='"+null+"'", null, null, null,null);
-               // Cursor ch = getContentResolver()
 
                 int oo = getContentResolver().update(uri, val,JOUR+"='"+jour+"'",null);
-                //uri = getContentResolver().query(uri, columns,JOUR+"='"+calToday+"'", null, null);
-                //long id = ContentUris.parseId(uri);
+
             }
-            Intent in = new Intent(this,MainActivity0.class);
+            Intent in = new Intent(this,MainActivity.class);
             finish();
             startActivity(in);
 
@@ -243,35 +181,21 @@ public class Assiette extends ListActivity implements View.OnClickListener{
 
     boolean jourExiste (){
         int i=0;
-        Log.d("aaaaaaaaa ", "00000000000" );
-        Log.d("bbbbbbbb ", String.valueOf(listeNom.size()));
-        Log.d("dddddddd ", listeNom.get(0));
-        Log.d("cccccccccc ", "ooooo"+repToday);
-        Log.d("aaaaaaaaa ", "55555555" );
+
         while (i<listeNom.size()){//enregistrer les repas dans un string
-            Log.d("eeeeeeee ", "88888888888" );
             repToday =repToday+listeNom.get(i)+" , ";
-            Log.d("eeeeeeeeee ", "99999999999" );
             i++;
         }
         //verifie si il a deja manger aujourdhui ou pas
-        Log.d("aaaaaaaaa ", "111111111111" );
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("content").authority(authority).appendPath(TABLE_REGIME);
-        Log.d("aaaaaaaaa ", "222222222222" );
         String[] columns = new String[]{ID, JOUR, CALORIES, REPA_MANGER,LIPIDES,GLUCIDES,PROTEINES};
         Uri uri = builder.build();
-        Log.d("aaaaaaaaa ", "333333333333" );
         Cursor ch = getContentResolver().query(uri, columns,null,null,null);
         ch.moveToFirst();
 
         while (!ch.isAfterLast()) {
-            Log.d("bbbbbbb",ch.getString(0));//id
-            Log.d("cursor1",ch.getString(1));//jour
-            Log.d("cursor2",ch.getString(2));//cal
-            //Log.d("cursor3",ch.getString(3));//lip
-            //Log.d("cursor4",ch.getString(4));//glu
-            //Log.d("cursor4",ch.getString(5));//pro
+
             if (jour.equals(ch.getString(1))){//jai deja manger today
                 calToday = ch.getString(2);
                 repToday = ch.getString(3)+repToday;
@@ -322,7 +246,7 @@ public class Assiette extends ListActivity implements View.OnClickListener{
                 listeR.remove(position);
                 adapter.notifyDataSetChanged();
                 if (listeNom.isEmpty()){
-                    Intent intent = new Intent(this,MainActivity0.class);
+                    Intent intent = new Intent(this,MainActivity.class);
                     finish();
                     startActivity(intent);
                 }
@@ -336,7 +260,7 @@ public class Assiette extends ListActivity implements View.OnClickListener{
             Log.i("listcalsize",String.valueOf(listecal.size()));
             adapter.notifyDataSetChanged();
             if (listeNom.isEmpty()){
-                Intent intent = new Intent(this,MainActivity0.class);
+                Intent intent = new Intent(this,MainActivity.class);
                 finish();
                 startActivity(intent);
             }
@@ -347,8 +271,6 @@ public class Assiette extends ListActivity implements View.OnClickListener{
     @Override
     public void onBackPressed()
     {
-       // super.onBackPressed();
-        //Intent i = new Intent(this,MainActivity0.class);
         MediaPlayer mp = MediaPlayer.create(Assiette.this,R.raw.alert);
         mp.start();
         AlertDialog.Builder builder = new AlertDialog.Builder(Assiette.this);

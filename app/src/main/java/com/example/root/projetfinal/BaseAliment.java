@@ -27,9 +27,6 @@ public class BaseAliment extends SQLiteOpenHelper {
     public final static String REPA_MANGER = "repas_manger";
 
 
-    /*CREATE TABLE `lol`.`loool` ( `id` INT(10) NOT NULL AUTO_INCREMENT ,
-    `jjj` VARCHAR(15) NOT NULL , PRIMARY KEY (id))*/
-
     public final static String CREATE_AL = "create table " + TABLE_ALIMENT + "(" +
             ID + " integer primary key, " +
             ALIMENTS + " string NOT NULL, " +

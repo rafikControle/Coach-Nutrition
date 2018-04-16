@@ -8,17 +8,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,7 +29,6 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
@@ -46,14 +41,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity0 extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SharedPreferences sf;
     TextView textView13;
@@ -61,12 +55,7 @@ public class MainActivity0 extends AppCompatActivity
     public static final String sharednom = "objectif";
     public static final String sharedmincal = "mincal";
     public static final String sharedmaxcal = "maxcal";
-    public static final String sharedmaxpro = "maxpro";
-    public static final String sharedminpro = "minpro";
-    public static final String sharedmaxglu = "maxglu";
-    public static final String sharedminglu = "minglu";
-    public static final String sharedmaxlip = "maxlip";
-    public static final String sharedminlip = "minlip";
+
     public static final String sharedmodifie = "disco";
     List<String> listeDeja = new ArrayList<String>();
     private String authority = "fr.rafik.projet";
@@ -81,33 +70,17 @@ public class MainActivity0 extends AppCompatActivity
 
     private static String url_all_al = "http://10.0.2.2/al_all.php";
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_TAXI = "taxi";
-    private static final String TAG_TID = "tid";
-    private static final String TAG_CLIENT = "client";
-    private static final String TAG_CODE = "code";
-    private static final String TAG_ID = "id";
+    private static final String TAG_AL = "aliments";
+    private static final String TAG_AID = "aid";
+
     JSONArray alim = null;
-    TextView tvc,tvl,tvglu,tvpro;
     ProgressDialog pDialog;
     InputStream inputStream;
-    //List<String> resultList = new ArrayList<String>();
-    List resultList = new ArrayList();
+
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
     int random;
 
-            /*"Cibler vos objectifs avec justesse","Choisissez le bon moment",
-    "Identifiez vos erreurs","Trouvez la méthode adaptée","Restez dans le droit chemin","Bétonnez la stabilisation"
-    ,"Changez durablement vos habitudes","Vérifiez, et rectifiez à la moindre alerte",
-    "Bougez !","Se fixer un objectif raisonnable : ne pas vouloir perdre plus de 5 kilos en un mois",
-    "Faire un choix dans ses aliments","Redécouvrir des aliments que vous aviez oublié",
-    "Augmenter les portions de fruits et légumes","Prendre un véritable petit déjeuner",
-    "Faire ses courses en ayant mangé avant","Eviter le grignotage entre les repas",
-    "Avoir toujours dans son frigidaire","Ne pas sauter de repas","Apprendre à ne pas se resservir","Prendre une collation",
-    "Boire suffisament","Ne pas oublier l’activité sportive","Prendre soin de vous",
-    "Apprenez à gérer les moments à risque","Reprenez le chemin du marché","Équipez-vous d'ustensiles de cuisine adaptés",
-    "À table, ouvrez l'éventail de ses goûts","Mangez 4 fois par jour","Mangez lentement, en sa-vou-rant",
-    "Buvez régulièrement"};*/
 
     PieChart pieChart;
     List<String> conseil;
@@ -163,8 +136,6 @@ public class MainActivity0 extends AppCompatActivity
             max=Integer.valueOf(maxc);
             pmin=min*100/(min+max);
             pmax=max*100/(min+max);
-            Log.d("pppppppppppppmin", String.valueOf(pmin));
-            Log.d("pppppppppppppmax", String.valueOf(pmax));
         }
 
 
@@ -182,11 +153,6 @@ public class MainActivity0 extends AppCompatActivity
 
         PieData data = new PieData(xVals, dataSet);
 
-        // In percentage Term
-        //data.setValueFormatter(new PercentFormatter());
-        // Default value
-        //data.setValueFormatter(new DefaultValueFormatter(0));
-        //test
         data.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
@@ -200,17 +166,9 @@ public class MainActivity0 extends AppCompatActivity
         pieChart.setTransparentCircleRadius(40f);
         pieChart.setHoleRadius(40f);
 
-        //pieChart.setHoleColor(Color.parseColor("#FFE0B2"));
         pieChart.setHoleColor(R.drawable.move);
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieChart.setData(data);
-/*
-        tvc=(TextView)findViewById(R.id.tvc);
-        tvl=(TextView)findViewById(R.id.tvl);
-        tvglu=(TextView)findViewById(R.id.tvglu);
-        tvpro=(TextView)findViewById(R.id.tvpro);*/
-
-
 
 
     }
@@ -227,7 +185,7 @@ public class MainActivity0 extends AppCompatActivity
     //gère le click sur une action de l'ActionBar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        MediaPlayer mp = MediaPlayer.create(MainActivity0.this,R.raw.bclick);
+        MediaPlayer mp = MediaPlayer.create(MainActivity.this,R.raw.bclick);
 
         if (item.getItemId() ==R.id.radd){
             mp.start();
@@ -246,7 +204,6 @@ public class MainActivity0 extends AppCompatActivity
             mp.start();
             //modifier objectif regime
             Intent intent = new Intent(this,Objectif.class);
-            //******************************************************
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(sharedmodifie,"0");
@@ -258,7 +215,7 @@ public class MainActivity0 extends AppCompatActivity
             startActivity(intent);
         }else if (item.getItemId() ==R.id.mbdd){
             mp.start();
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity0.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage("Cette fonctionnalité est montanement desactivé.");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -274,7 +231,7 @@ public class MainActivity0 extends AppCompatActivity
                 }
             });
             builder.show();
-            //mettre a jout bdd local via bdd externe
+            //mettre a jour bdd local via bdd externe
             //antiDuplication(0);
         }else if (item.getItemId() ==R.id.mvsc){
             mp.start();
@@ -295,7 +252,7 @@ public class MainActivity0 extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        MediaPlayer mp = MediaPlayer.create(MainActivity0.this,R.raw.bclick);
+        MediaPlayer mp = MediaPlayer.create(MainActivity.this,R.raw.bclick);
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -303,14 +260,13 @@ public class MainActivity0 extends AppCompatActivity
         if (id == R.id.nmain) {
             mp.start();
             //retour vers mais
-            Intent intent = new Intent(this,MainActivity0.class);
+            Intent intent = new Intent(this,MainActivity.class);
             finish();
             startActivity(intent);
         } else if (id == R.id.nobj) {
             mp.start();
             //modifier objectif regime
             Intent intent = new Intent(this,Objectif.class);
-            //******************************************************
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(sharedmodifie,"0");
@@ -353,22 +309,13 @@ public class MainActivity0 extends AppCompatActivity
     }
 
     void antiDuplication(int ok){
-        Log.d("aaaaaaaaa ", "rrrrrrrrrrrrr" );
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("content").authority(authority).appendPath(TABLE_ALIMENT);
         String[] columns = new String[]{ID, ALIMENTS, CALORIES, LIPIDES,GLUCIDES,PROTEINES};
         Uri uri = builder.build();
-        Log.d("aaaaaaaaa ", "77777777" );
         Cursor ch = getContentResolver().query(uri, columns,null,null,null);
         ch.moveToFirst();
         while (!ch.isAfterLast()) {
-            Log.d("bbbbbbb",ch.getString(0));//id
-            Log.d("cursor1",ch.getString(1));//ali
-            Log.d("cursor2",ch.getString(2));//cal
-           // Log.d("cursor3",ch.getString(3));//lip
-           // Log.d("cursor4",ch.getString(4));//glu
-           // Log.d("cursor4",ch.getString(5));//pro
-
             listeDeja.add(ch.getString(1));
             ch.moveToNext();
         }
@@ -384,13 +331,10 @@ public class MainActivity0 extends AppCompatActivity
     }
 
 
-
-    //*************************************************************
     class LoadAllAliments extends AsyncTask<String, String, JSONObject> {
         protected void onPreExecute() {
-            //ici
             super.onPreExecute();
-            pDialog = new ProgressDialog(MainActivity0.this);
+            pDialog = new ProgressDialog(MainActivity.this);
             pDialog.setMessage("Mise a jout BDD..");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
@@ -400,7 +344,6 @@ public class MainActivity0 extends AppCompatActivity
 
         @Override
         protected JSONObject doInBackground(String... args) {
-            //  if (delatation==1){SystemClock.sleep(10000);}
             try {
 
                 HashMap<String, String> params = new HashMap<>();
@@ -432,14 +375,14 @@ public class MainActivity0 extends AppCompatActivity
                     if (success == 1) {
                         // aliments trouvé
                         // recevoir tous les aliments dans une list
-                        alim = json.getJSONArray(TAG_TAXI);
+                        alim = json.getJSONArray(TAG_AL);
                         int longeur = alim.length();//la longeur du resultat(combien ya de aliments)
 
                         // bouclé dans tous les aliments
                         int i = 0;
                         while (i < longeur) {
                             JSONObject t = alim.getJSONObject(i);//++++++++++++++++++
-                            // afecter cheke json a une variable
+                            // afecter chaque json a une variable
                             if (!listeDeja.contains(t.getString(ALIMENTS))) {
                                 String nom_ali = t.getString(ALIMENTS);
                                 String nombre_cal = t.getString(CALORIES);
@@ -477,7 +420,6 @@ public class MainActivity0 extends AppCompatActivity
             pDialog.dismiss();
         }
     }
-    //*************************************************************
 
     public void read(){
         inputStream = getResources().openRawResource(R.raw.test);
@@ -487,21 +429,14 @@ public class MainActivity0 extends AppCompatActivity
             while ((csvLine = reader.readLine()) != null) {
                 String[] row = csvLine.split(";");
                 Log.i("aaaaaaaaaaaaaaaa",String.valueOf(row[0]));
-               // resultList.add(row);
-                //*********************************************************
+
                 if (!listeDeja.contains(String.valueOf(row[0]))) {
                     String nom_ali = String.valueOf(row[0]);
                     String nombre_cal = String.valueOf(row[1]);
-                  //  String nombre_lip = String.valueOf(row[2]);
-                   // String nombre_glu = String.valueOf(row[3]);
-                   // String nombre_pro = String.valueOf(row[4]);
                     //ajout dans la bdd l'aliment
                     ContentValues values = new ContentValues();
                     values.put(ALIMENTS, nom_ali);
                     values.put(CALORIES, nombre_cal);
-                  //  values.put(LIPIDES, nombre_lip);
-                  //  values.put(GLUCIDES, nombre_glu);
-                  //  values.put(PROTEINES, nombre_pro);
 
                     Uri.Builder builder = new Uri.Builder();
                     builder.scheme("content").authority(authority).appendPath(TABLE_ALIMENT);
@@ -509,7 +444,6 @@ public class MainActivity0 extends AppCompatActivity
                     uri = getContentResolver().insert(uri, values);
                     long id = ContentUris.parseId(uri);
                     Log.d("aaaaaaaaa ", String.valueOf(id));
-                //*********************************************************
             }
         }
         }
@@ -537,12 +471,10 @@ public class MainActivity0 extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            MediaPlayer mp = MediaPlayer.create(MainActivity0.this,R.raw.alert);
+            MediaPlayer mp = MediaPlayer.create(MainActivity.this,R.raw.alert);
             mp.start();
-           // super.onBackPressed();
-            // final Intent i = new Intent(this,MainActivity0.class);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity0.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage("Etes vous sur de vouloir quittez l'application ?");
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 @Override

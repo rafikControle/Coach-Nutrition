@@ -11,7 +11,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -97,7 +96,7 @@ public class AjoutAliment extends AppCompatActivity implements View.OnClickListe
         }else if (v.getId()==R.id.breto){
             MediaPlayer mp = MediaPlayer.create(AjoutAliment.this,R.raw.bclick);
             mp.start();
-            Intent intent = new Intent(this,MainActivity0.class);
+            Intent intent = new Intent(this,MainActivity.class);
             finish();
             startActivity(intent);
         }
@@ -110,7 +109,7 @@ public class AjoutAliment extends AppCompatActivity implements View.OnClickListe
         MediaPlayer mp = MediaPlayer.create(AjoutAliment.this,R.raw.alert);
         mp.start();
         //super.onBackPressed();
-        final Intent i = new Intent(this,MainActivity0.class);
+        final Intent i = new Intent(this,MainActivity.class);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AjoutAliment.this);
         builder.setMessage("Quitter l'activité ?");
@@ -143,7 +142,7 @@ public class AjoutAliment extends AppCompatActivity implements View.OnClickListe
             MediaPlayer mp = MediaPlayer.create(AjoutAliment.this,R.raw.bclick);
             mp.start();
             //retour vers mais
-            Intent intent = new Intent(this,MainActivity0.class);
+            Intent intent = new Intent(this,MainActivity.class);
             finish();
             startActivity(intent);
         } else if (id == R.id.nobj) {
@@ -151,12 +150,11 @@ public class AjoutAliment extends AppCompatActivity implements View.OnClickListe
             mp.start();
             //modifier objectif regime
             Intent intent = new Intent(this,Objectif.class);
-            //******************************************************
+
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(sharedmodifie,"0");
             String didi=prefs.getString(sharedmodifie,null);
-            Log.i("naaaaaaaaaaaaaaaame",didi);
             editor.apply();
 
             finish();
@@ -191,31 +189,18 @@ public class AjoutAliment extends AppCompatActivity implements View.OnClickListe
     }
 
     void antiDuplication(){
-        Log.d("aaaaaaaaa ", "rrrrrrrrrrrrr" );
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("content").authority(authority).appendPath(TABLE_ALIMENT);
         String[] columns = new String[]{ID, ALIMENTS, CALORIES, LIPIDES,GLUCIDES,PROTEINES};
         Uri uri = builder.build();
-        Log.d("aaaaaaaaa ", "77777777" );
         Cursor ch = getContentResolver().query(uri, columns,null,null,null);
         ch.moveToFirst();
         while (!ch.isAfterLast()) {
-            Log.d("bbbbbbb",ch.getString(0));//id
-            Log.d("cursor1",ch.getString(1));//ali
-            Log.d("cursor2",ch.getString(2));//cal
-            // Log.d("cursor3",ch.getString(3));//lip
-            // Log.d("cursor4",ch.getString(4));//glu
-            // Log.d("cursor4",ch.getString(5));//pro
-
             listeDeja.add(ch.getString(1));
             ch.moveToNext();
         }
 
-
-            //  List scoreList = read();
-            read();
-
-
+           read();
 
     }
 
@@ -223,31 +208,23 @@ public class AjoutAliment extends AppCompatActivity implements View.OnClickListe
 
     public void read(){
 
+        if (!listeDeja.contains(nom_ali)) {
+            //ajout dans la bdd l'aliment
+            ContentValues values = new ContentValues();
+            values.put(ALIMENTS,nom_ali);
+            values.put(CALORIES,nombre_cal);
 
-                if (!listeDeja.contains(nom_ali)) {
-                    //ajout dans la bdd l'aliment
-                    ContentValues values = new ContentValues();
-                    values.put(ALIMENTS,nom_ali);
-                    values.put(CALORIES,nombre_cal);
-
-                    Uri.Builder builder = new Uri.Builder();
-                    builder.scheme("content").authority(authority).appendPath(TABLE_ALIMENT);
-                    Uri uri = builder.build();
-                    uri = getContentResolver().insert(uri,values);
-                    long id = ContentUris.parseId(uri);
-                    Log.d("aaaaaaaaa ", String.valueOf(id));
-                    nali.getText().clear();
-                    ncal.getText().clear();
-                }else {
-                    Toast.makeText(getApplicationContext(), "Aliment éxiste deja",
-                            Toast.LENGTH_LONG).show();
-                }
-
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("content").authority(authority).appendPath(TABLE_ALIMENT);
+            Uri uri = builder.build();
+            uri = getContentResolver().insert(uri,values);
+            long id = ContentUris.parseId(uri);
+            nali.getText().clear();
+            ncal.getText().clear();
+        }else {
+            Toast.makeText(getApplicationContext(), "Aliment éxiste deja",
+                    Toast.LENGTH_LONG).show();
         }
-
-
-
-        //return resultList;
-
+    }
 
 }
